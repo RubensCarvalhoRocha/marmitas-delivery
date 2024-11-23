@@ -25,7 +25,7 @@ interface RoleOption {
 }
 
 @Component({
-  selector: 'app-register-user',
+  selector: 'app-sign-up',
   standalone: true,
   imports: [
     TableModule,
@@ -40,10 +40,10 @@ interface RoleOption {
     ReactiveFormsModule,
     DropdownModule,
   ],
-  templateUrl: './register-user.component.html',
-  styleUrl: './register-user.component.css',
+  templateUrl: './sign-up.component.html',
+  styleUrl: './sign-up.component.css',
 })
-export class RegisterUserComponent implements OnInit {
+export class SignUpComponent implements OnInit {
   userForm: FormGroup;
   loading: boolean = false;
   roles: RoleOption[] = [];
@@ -77,7 +77,7 @@ export class RegisterUserComponent implements OnInit {
       this.loading = true;
       this.userService.register(this.userForm.value).subscribe({
         next: () => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['/sign-in']);
         },
         error: (error) => {
           this.loading = false;

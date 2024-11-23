@@ -17,7 +17,7 @@ export class HomeComponent {
   }
 
   login(){
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sign-in']);
   }
 
   navigateTo(route: string) {

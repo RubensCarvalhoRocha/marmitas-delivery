@@ -13,17 +13,17 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot): boolean {
     if (!this.authService.isLoggedIn) {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/sign-in']);
       return false;
     }
 
     // Verifica se a rota requer roles específicas
     const requiredRoles = route.data['roles'] as Array<string>;
     if (requiredRoles) {
-      const hasRequiredRole = requiredRoles.some(role => 
+      const hasRequiredRole = requiredRoles.some(role =>
         this.authService.hasRole(role)
       );
-      
+
       if (!hasRequiredRole) {
         alert(`Você não tem permissão`);
         return false;
@@ -32,4 +32,4 @@ export class AuthGuard implements CanActivate {
 
     return true;
   }
-} 
+}

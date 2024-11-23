@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { ToastModule } from 'primeng/toast';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-sign-in',
   standalone: true,
   imports: [
     NgIf,
@@ -19,10 +19,10 @@ import { ToastModule } from 'primeng/toast';
     CommonModule,
     ToastModule,
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
+  templateUrl: './sign-in.component.html',
+  styleUrl: './sign-in.component.css',
 })
-export class LoginComponent {
+export class SignInComponent {
   username: string = '';
   password: string = '';
   errorMessage: string = '';
@@ -36,7 +36,7 @@ export class LoginComponent {
         const token = response.token; // Esperando a resposta com o token JWT
         if (token) {
           console.log('Autenticado com sucesso!');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/pedidos']);
         }
       },
       (error) => {

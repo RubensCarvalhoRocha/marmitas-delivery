@@ -72,7 +72,7 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.router.navigate(['/login']);
+    this.router.navigate(['/sign-in']);
   }
 
   hasRole(role: string): boolean {
