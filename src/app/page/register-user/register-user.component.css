@@ -1,0 +1,84 @@
+/* src/app/components/user-registration/user-registration.component.css */
+
+.surface-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-900 {
+  color: #333333;
+}
+
+.text-3xl {
+  font-size: 1.75rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
+}
+
+.gap-2 {
+  gap: 8px;
+}
+
+.mb-3 {
+  margin-bottom: 16px;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.label {
+  font-weight: bold;
+  color: #555555;
+}
+
+input,
+p-password,
+p-dropdown {
+  border: 1px solid #cccccc;
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+input:focus,
+p-password:focus,
+p-dropdown:focus {
+  outline: none;
+  border-color: #007ad9;
+  box-shadow: 0 0 5px rgba(0, 122, 217, 0.5);
+}
+
+p-button {
+  margin-top: 20px;
+  font-size: 1rem;
+}
+
+p-button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
