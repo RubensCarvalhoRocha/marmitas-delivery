@@ -5,6 +5,7 @@ import { AppLayoutComponent } from './layout/app.layout.component';
 import { SignInComponent } from './modules/sign-in/sign-in.component';
 import { PedidosComponent } from './modules/pedidos/pedidos.component';
 import { RotasComponent } from './modules/rotas/rotas.component';
+import { PedidosFormComponent } from './modules/pedidos/pedidos-form/pedidos-form.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'pedidos', pathMatch: 'full' },
@@ -24,6 +25,12 @@ export const routes: Routes = [
       {
         path: '',
         component: PedidosComponent,
+        canActivate: [AuthGuard],
+        data: { roles: ['ROLE_ADMIN'] },
+      },
+      {
+        path: ':id',
+        component: PedidosFormComponent,
         canActivate: [AuthGuard],
         data: { roles: ['ROLE_ADMIN'] },
       },
