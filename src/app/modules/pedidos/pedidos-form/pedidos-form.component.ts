@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { MapaComponent } from '../../mapa/mapa.component';
 
 @Component({
   selector: 'app-pedidos-form',
   standalone: true,
-  imports: [DropdownModule, FormsModule],
+  imports: [DropdownModule, FormsModule, MapaComponent],
   templateUrl: './pedidos-form.component.html',
   styleUrl: './pedidos-form.component.css',
 })

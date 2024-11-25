@@ -1,0 +1,23 @@
+<div>
+  <input
+    id="addressInput"
+    type="text"
+    placeholder="Digite o endereço"
+    style="width: 100%; padding: 8px; margin-bottom: 10px"
+  />
+</div>
+<google-map
+  height="400px"
+  width="100%"
+  [center]="center"
+  [zoom]="zoom"
+  (mapClick)="onMapClick($event)"
+>
+  <map-marker
+    *ngIf="markerPosition !== null"
+    [position]="markerPosition!"
+  ></map-marker>
+</google-map>
+<button (click)="confirmLocation()" style="margin-top: 10px">
+  Confirmar Localização
+</button>
