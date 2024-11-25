@@ -6,13 +6,14 @@ import {
   MapMarker,
   GoogleMapsModule,
 } from '@angular/google-maps';
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-mapa',
   templateUrl: './mapa.component.html',
   styleUrls: ['./mapa.component.css'],
   standalone: true,
-  imports: [GoogleMapsModule, CommonModule],
+  imports: [GoogleMapsModule, CommonModule, ButtonModule],
 })
 export class MapaComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
