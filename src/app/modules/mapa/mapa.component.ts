@@ -22,6 +22,7 @@ export class MapaComponent implements OnInit {
   zoom = 14;
   markerPosition: google.maps.LatLngLiteral | null = null;
   address: string = '';
+  private geocoder = new google.maps.Geocoder();
 
   ngOnInit() {
     this.initializeAutocomplete();
@@ -57,8 +58,24 @@ export class MapaComponent implements OnInit {
 
   confirmLocation() {
     if (this.markerPosition) {
-      console.log('Localização confirmada:', this.markerPosition);
-      // Aqui você pode enviar a localização confirmada para o backend ou realizar outras ações necessárias
+      const latLng = new google.maps.LatLng(
+        this.markerPosition.lat,
+        this.markerPosition.lng
+      );
+
+      this.geocoder.geocode({ location: latLng }, (results, status) => {
+        if (
+          status === google.maps.GeocoderStatus.OK &&
+          results &&
+          results.length > 0
+        ) {
+          const fullAddress = results[0].formatted_address;
+          console.log('Endereço completo:', fullAddress);
+          console.log('Detalhes do endereço:', results[0]); // Contém todos os detalhes, como componentes do endereço
+        } else {
+          console.error('Erro ao obter o endereço:', status);
+        }
+      });
     }
   }
 }
