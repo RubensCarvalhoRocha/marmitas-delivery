@@ -1,16 +1,64 @@
-<!-- endereço -->
+<div class="card">
+  <h5>Informações do Cliente:</h5>
+  <div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-6">
+      <label htmlFor="firstname1" class="p-sr-only">Nome do Cliente</label>
+      <input pInputText id="firstname1" type="text" placeholder="Nome" />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label htmlFor="lastname1" class="p-sr-only">CPF</label>
+      <input pInputText id="lastname1" type="text" placeholder="CPF" />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label htmlFor="lastname1" class="p-sr-only">Telefone</label>
+      <input pInputText id="lastname1" type="text" placeholder="Telefone" />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label htmlFor="lastname1" class="p-sr-only">Referência</label>
+      <input pInputText id="lastname1" type="text" placeholder="Referência" />
+    </div>
+  </div>
+</div>
+
+<!-- Endereço -->
 <app-mapa></app-mapa>
 
-<!-- Nome -->
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>Pedido</h5>
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-6">
+          <label htmlFor="firstname2">Firstname</label>
+          <input pInputText id="firstname2" type="text" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="lastname2">Lastname</label>
+          <input pInputText id="lastname2" type="text" />
+        </div>
+        <div class="field col-12">
+          <label htmlFor="address">Address</label>
+          <input pInputTextarea id="address" rows="4" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label htmlFor="city">City</label>
+          <input pInputText id="city" type="text" />
+        </div>
+        <div class="field col-12 md:col-3">
+          <label htmlFor="state">State</label>
+          <p-dropdown
+            [options]="dropdownItems"
+            optionLabel="name"
+            [(ngModel)]="selectedState"
+          ></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-3">
+          <label htmlFor="zip">Zip</label>
+          <input pInputText id="zip" type="text" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-<!-- CPF -->
-
-<!-- Telefone -->
-
-<!-- Caixa de seleção de marmitas -->
-
-<!-- Observação -->
-
-<!-- Caixa de Seleção Forma de Pagamento -->
-
-<!-- Precisa de troco? -->
+<!-- Referência -->
