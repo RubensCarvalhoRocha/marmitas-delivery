@@ -1,27 +1,27 @@
-<div>
-  <input
-    id="addressInput"
-    type="text"
-    placeholder="Digite o endereço"
-    style="width: 70%; padding: 8px; margin-bottom: 10px"
-  />
+<div class="card">
+  <h5>Localização:</h5>
+  <div class="field">
+    <input
+      pInputText
+      id="addressInput"
+      type="text"
+      placeholder="Digite o endereço"
+      style="width: 100%; margin-bottom: 10px"
+    />
+  </div>
+  <google-map
+    height="300px"
+    width="100%"
+    [center]="center"
+    [zoom]="zoom"
+    (mapClick)="onMapClick($event)"
+  >
+    <map-marker
+      *ngIf="markerPosition !== null"
+      [position]="markerPosition!"
+    ></map-marker>
+  </google-map>
+  <p-button (click)="confirmLocation()" placeholder="Buscar endereço e número">
+    Confirmar Localização
+  </p-button>
 </div>
-<google-map
-  height="300px"
-  width="70%"
-  [center]="center"
-  [zoom]="zoom"
-  (mapClick)="onMapClick($event)"
->
-  <map-marker
-    *ngIf="markerPosition !== null"
-    [position]="markerPosition!"
-  ></map-marker>
-</google-map>
-<p-button
-  (click)="confirmLocation()"
-  class="margin-top: 10px"
-  placeholder="Buscar endereço e número"
->
-  Confirmar Localização
-</p-button>
