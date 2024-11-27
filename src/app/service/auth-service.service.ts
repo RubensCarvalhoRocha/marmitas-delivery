@@ -111,6 +111,6 @@ export class AuthService {
 
   getUserProfile(): Observable<any> {
     const headers = this.addAuthorizationHeader();
-    return this.http.get<any>('http://localhost:8080/profile', { headers });
+    return this.http.get<any>(`${environment.api}/profile`, { headers });
   }
 }
