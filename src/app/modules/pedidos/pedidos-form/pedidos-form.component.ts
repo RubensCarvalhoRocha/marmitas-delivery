@@ -51,18 +51,6 @@ import {
 })
 export class PedidosFormComponent implements OnInit {
   form!: FormGroup;
-  formasPagamento = [
-    { label: 'Dinheiro', value: 'dinheiro' },
-    { label: 'Cartão de Crédito', value: 'credito' },
-    { label: 'Cartão de Débito', value: 'debito' },
-    { label: 'PIX', value: 'pix' },
-  ];
-  marmitas = [
-    { label: 'Marmita Pequena', value: 'pequena' },
-    { label: 'Marmita Média', value: 'media' },
-    { label: 'Marmita Grande', value: 'grande' },
-  ];
-
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit() {
@@ -88,20 +76,19 @@ export class PedidosFormComponent implements OnInit {
     }
   }
 
-  selectedState: any = null;
+  selectedMarmita: any = null;
+  selectedFormaPagamento: any = null;
 
-  states: any[] = [
-    { name: 'Arizona', code: 'Arizona' },
-    { name: 'California', value: 'California' },
-    { name: 'Florida', code: 'Florida' },
-    { name: 'Ohio', code: 'Ohio' },
-    { name: 'Washington', code: 'Washington' },
+  formasPagamento = [
+    { name: 'Cartão', code: 'Option 1' },
+    { name: 'Pix', code: 'Option 2' },
+    { name: 'Dinheiro', code: 'Option 3' },
   ];
 
   dropdownItems = [
-    { name: 'Option 1', code: 'Option 1' },
-    { name: 'Option 2', code: 'Option 2' },
-    { name: 'Option 3', code: 'Option 3' },
+    { name: 'Marmita Padrão', code: 'Option 1' },
+    { name: 'Marmita Especial', code: 'Option 2' },
+    { name: 'Marmita Vegana', code: 'Option 3' },
   ];
 
   cities1: any[] = [];
