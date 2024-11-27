@@ -73,7 +73,7 @@ export class MapaComponent implements OnInit {
         ) {
           const fullAddress = results[0].formatted_address;
           console.log('Endereço completo:', fullAddress);
-          console.log('Detalhes do endereço:', results[0]); // Contém todos os detalhes, como componentes do endereço
+          console.log('Detalhes do endereço:', JSON.stringify(results[0], null, 4)); // Contém todos os detalhes, como componentes do endereço
         } else {
           console.error('Erro ao obter o endereço:', status);
         }
