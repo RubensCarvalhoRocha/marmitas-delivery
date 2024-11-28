@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environment/environment';
@@ -9,30 +9,30 @@ import { UserRegistration } from '../model/userRegistration';
   providedIn: 'root',
 })
 export class UserService {
-  constructor(private http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
   getAllUsers(): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.api}/users/all`);
+    return this._http.get<User[]>(`${environment.api}/users/all`);
   }
 
   register(user: UserRegistration): Observable<User> {
-    return this.http.post<User>(`${environment.api}/users/sign-up`, user);
+    return this._http.post<User>(`${environment.api}/users/sign-up`, user);
   }
 
   getUserByUsername(username: string): Observable<User> {
-    return this.http.get<User>(`${environment.api}/users/${username}`);
+    return this._http.get<User>(`${environment.api}/users/${username}`);
   }
 
   updateUser(id: number, user: Partial<User>): Observable<User> {
-    return this.http.put<User>(`${environment.api}/users/${id}`, user);
+    return this._http.put<User>(`${environment.api}/users/${id}`, user);
   }
 
   toggleUserStatus(user: User): Observable<void> {
-    return this.http.put<void>(`${environment.api}/users/toggle-status`, user);
+    return this._http.put<void>(`${environment.api}/users/toggle-status`, user);
   }
 
   getCurrentUserProfile(): Observable<User> {
-    return this.http.get<User>(`${environment.api}/users/profile`);
+    return this._http.get<User>(`${environment.api}/users/profile`);
   }
 
   // Alterar senha
@@ -40,7 +40,7 @@ export class UserService {
     id: number,
     passwords: { currentPassword: string; newPassword: string }
   ): Observable<void> {
-    return this.http.put<void>(
+    return this._http.put<void>(
       `${environment.api}/users/${id}/change-password`,
       passwords
     );
@@ -48,7 +48,7 @@ export class UserService {
 
   // Verificar se email já existe
   checkEmailExists(email: string): Observable<boolean> {
-    return this.http.get<boolean>(
+    return this._http.get<boolean>(
       `${environment.api}/users/check-email/${email}`
     );
   }
@@ -75,7 +75,7 @@ export class UserService {
       }
     });
 
-    return this.http.get<any>(
+    return this._http.get<any>(
       `${environment.api}/users/search?${queryParams.toString()}`
     );
   }
