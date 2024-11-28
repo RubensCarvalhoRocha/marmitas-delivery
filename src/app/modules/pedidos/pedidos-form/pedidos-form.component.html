@@ -1,69 +1,96 @@
-<form [formGroup]="form">
-  <div class="card">
-    <h5>Informações do Cliente:</h5>
-    <div class="p-fluid p-formgrid grid">
-      <div class="field col-12 md:col-6">
-        <label class="p-sr-only">Nome do Cliente</label>
-        <input
-          pInputText
-          formControlName="nomeCliente"
-          type="text"
-          placeholder="Nome"
-        />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label class="p-sr-only">CPF</label>
-        <input pInputText formControlName="cpf" type="text" placeholder="CPF" />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label class="p-sr-only">Telefone</label>
-        <input
-          pInputText
-          formControlName="telefone"
-          type="text"
-          placeholder="Telefone"
-        />
-      </div>
-      <div class="field col-12 md:col-6">
-        <label htmlFor="lastname1" class="p-sr-only">Referência</label>
-        <input
-          pInputText
-          id="lastname1"
-          formControlName="referencia"
-          type="text"
-          placeholder="Referência"
-        />
-      </div>
+<div class="card">
+  <h5>Informações do Cliente:</h5>
+  <div class="p-fluid p-formgrid grid">
+    <div class="field col-12 md:col-6">
+      <label class="p-sr-only">Nome do Cliente</label>
+      <input
+        pInputText
+        [(ngModel)]="pedido.nomeCliente"
+        name="nomeCliente"
+        type="text"
+        placeholder="Nome"
+      />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label class="p-sr-only">CPF</label>
+      <input
+        pInputText
+        [(ngModel)]="pedido.cpf"
+        name="cpf"
+        type="text"
+        placeholder="CPF"
+      />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label class="p-sr-only">Telefone</label>
+      <input
+        pInputText
+        [(ngModel)]="pedido.telefone"
+        name="telefone"
+        type="text"
+        placeholder="Telefone"
+      />
+    </div>
+    <div class="field col-12 md:col-6">
+      <label htmlFor="lastname1" class="p-sr-only">Referência</label>
+      <input
+        pInputText
+        id="lastname1"
+        [(ngModel)]="pedido.referencia"
+        name="referencia"
+        type="text"
+        placeholder="Referência"
+      />
     </div>
   </div>
+</div>
 
-  <!-- Endereço -->
-  <app-mapa></app-mapa>
+<!-- Endereço -->
+<app-mapa></app-mapa>
 
-  <div class="grid">
-    <div class="col-12">
-      <div class="card">
-        <h5>Pedido</h5>
-        <div class="p-fluid p-formgrid grid">
-          <div class="field col-12 md:col-8">
-            <label>Observação</label>
-            <input pInputText formControlName="observacao" type="text" />
-          </div>
-          <div class="field col-12 md:col-4">
-            <label htmlFor="state">Forma de pagamento</label>
-            <p-dropdown
-              [options]="formasPagamento"
-              optionLabel="name"
-              formControlName="formaPagamento"
-            ></p-dropdown>
-          </div>
-          <div class="field col-12 md:col-4">
-            <label>Caso precise de troco: para qual valor?</label>
-            <input pInputText formControlName="troco" type="number" />
-          </div>
+<div class="grid">
+  <div class="col-12">
+    <div class="card">
+      <h5>Pedido</h5>
+      <div class="p-fluid p-formgrid grid">
+        <div class="field col-12 md:col-4">
+          <label>Quantidade</label>
+          <input
+            pInputText
+            [(ngModel)]="pedido.quantidade"
+            name="quantidade"
+            type="number"
+          />
         </div>
-        <p-button [disabled]="!form.valid">Realizar pedido</p-button>
+        <div class="field col-12 md:col-4">
+          <label htmlFor="state">Forma de pagamento</label>
+          <p-dropdown
+            [options]="formasPagamento"
+            optionLabel="name"
+            [(ngModel)]="pedido.pagamento"
+            name="formaPagamento"
+          ></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-4">
+          <label>Caso precise de troco: para qual valor?</label>
+          <input
+            pInputText
+            [(ngModel)]="pedido.troco"
+            name="troco"
+            type="number"
+          />
+        </div>
+        <div class="field col-12 md:col-12">
+          <label>Observação</label>
+          <input
+            pInputText
+            [(ngModel)]="pedido.obs"
+            name="observacao"
+            type="text"
+          />
+        </div>
       </div>
+      <p-button>Realizar pedido</p-button>
     </div>
   </div>
-</form>
+</div>

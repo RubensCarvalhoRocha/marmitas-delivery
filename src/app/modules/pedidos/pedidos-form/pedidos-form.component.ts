@@ -20,6 +20,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Pedido } from '../../../model/pedido';
+import { PedidosService } from '../pedidos.service';
 
 @Component({
   selector: 'app-pedidos-form',
@@ -50,40 +52,22 @@ import {
   styleUrl: './pedidos-form.component.css',
 })
 export class PedidosFormComponent implements OnInit {
-  form!: FormGroup;
-  constructor(private _formBuilder: FormBuilder) {}
+  formasPagamento = [
+    { name: 'Dinheiro', code: 'DINHEIRO' },
+    { name: 'Cartão Crédito', code: 'CARTAO_CREDITO' },
+    { name: 'Cartão Débito', code: 'CARTAO_DEBITO' },
+    { name: 'Pix', code: 'PIX' },
+  ];
 
-  ngOnInit() {
-    this.form = this._formBuilder.group({
-      id: [null],
-      nomeCliente: ['', [Validators.required]],
-      cpf: ['', [Validators.required, Validators.pattern(/^\d{11}$/)]],
-      telefone: ['', [Validators.required, Validators.pattern(/^\d{10,11}$/)]],
-      pedido: [[], Validators.required],
-      observacao: [''],
-      formaPagamento: [null, Validators.required],
-      troco: [0],
-      valorTotal: [{ value: '', disabled: true }],
-      referencia: [''],
-      quantidade: [0],
-    });
-  }
+  pedido: Pedido = new Pedido({});
+
+  constructor(private _service: PedidosService) {}
+
+  ngOnInit() {}
 
   onSubmit() {
-    if (this.form.valid) {
-      console.log(this.form.value);
-      // Adicione a lógica para salvar o pedido
-    } else {
-      console.error('Formulário inválido');
-    }
+    this._service.salvarPedido(this.pedido).subscribe((pedido) => {
+      console.log('Pedido salvo:', pedido);
+    });
   }
-
-  selectedMarmita: any = null;
-  selectedFormaPagamento: any = null;
-
-  formasPagamento = [
-    { name: 'Cartão', code: 'Option 1' },
-    { name: 'Pix', code: 'Option 2' },
-    { name: 'Dinheiro', code: 'Option 3' },
-  ];
 }
