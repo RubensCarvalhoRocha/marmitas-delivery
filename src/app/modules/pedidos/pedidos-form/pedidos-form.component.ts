@@ -62,8 +62,10 @@ export class PedidosFormComponent implements OnInit {
       pedido: [[], Validators.required],
       observacao: [''],
       formaPagamento: [null, Validators.required],
-      troco: [false],
+      troco: [0],
       valorTotal: [{ value: '', disabled: true }],
+      referencia: [''],
+      quantidade: [0],
     });
   }
 
@@ -84,18 +86,4 @@ export class PedidosFormComponent implements OnInit {
     { name: 'Pix', code: 'Option 2' },
     { name: 'Dinheiro', code: 'Option 3' },
   ];
-
-  dropdownItems = [
-    { name: 'Marmita Padrão', code: 'Option 1' },
-    { name: 'Marmita Especial', code: 'Option 2' },
-    { name: 'Marmita Vegana', code: 'Option 3' },
-  ];
-
-  cities1: any[] = [];
-
-  cities2: any[] = [];
-
-  city1: any = null;
-
-  city2: any = null;
 }
