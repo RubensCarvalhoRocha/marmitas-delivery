@@ -1,9 +1,56 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Pedido } from '../../model/pedido';
+import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PedidosService {
+  // Private BehaviorSubject para armazenar e gerenciar os pedidos
+  private _pedidos: BehaviorSubject<Pedido[]> = new BehaviorSubject<Pedido[]>(
+    []
+  );
 
-  constructor() { }
+  /**
+   * Constructor
+   */
+  constructor(private _http: HttpClient) {}
+
+  // -----------------------------------------------------------------------------------------------------
+  // @ Acessores
+  // -----------------------------------------------------------------------------------------------------
+  get pedidos$(): Observable<Pedido[]> {
+    return this._pedidos.asObservable();
+  }
+
+  // -----------------------------------------------------------------------------------------------------
+  // @ Métodos Públicos
+  // -----------------------------------------------------------------------------------------------------
+
+  /**
+   * Obter lista de pedidos do servidor
+   */
+  salvarPedido(pedido: Pedido): Observable<Pedido> {
+    return this._http.post<Pedido>(`${environment.api}/pedidos`, pedido).pipe(
+      catchError((error) => {
+        throw error;
+      }),
+      tap(() => {})
+    );
+  }
+
+  listarPedidos(): Observable<Pedido[]> {
+    return this._http.get<Pedido[]>(`${environment.api}/pedidos`).pipe(
+      tap((pedidos: Pedido[]) => {
+        // Atualiza o BehaviorSubject com os pedidos recebidos
+        this._pedidos.next(pedidos);
+      }),
+      catchError((error) => {
+        console.error('Erro ao buscar pedidos:', error);
+        throw error;
+      })
+    );
+  }
 }
