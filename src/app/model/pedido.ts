@@ -1,5 +1,3 @@
-import { Pagamento } from './pagamento';
-
 export class Pedido {
   public nomeCliente?: string;
   public cpf?: string;
