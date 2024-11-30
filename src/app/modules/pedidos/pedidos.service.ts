@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pedido } from '../../model/pedido';
-import { BehaviorSubject, catchError, Observable, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
 
 @Injectable({
@@ -35,9 +35,10 @@ export class PedidosService {
   salvarPedido(pedido: Pedido): Observable<Pedido> {
     return this._http.post<Pedido>(`${environment.api}/pedidos`, pedido).pipe(
       catchError((error) => {
-        throw error;
-      }),
-      tap(() => {})
+        // Extrai a mensagem do erro
+        const errorMessage = error.error?.message || 'Ocorreu um erro desconhecido.';
+        return throwError(() => new Error(errorMessage));
+      })
     );
   }
 

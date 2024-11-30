@@ -52,6 +52,7 @@ import { PedidosService } from '../pedidos.service';
   styleUrl: './pedidos-form.component.css',
 })
 export class PedidosFormComponent implements OnInit {
+  readonly precoMarmita = 15;
   formasPagamento = [
     { name: 'Dinheiro', code: 'DINHEIRO' },
     { name: 'Cartão Crédito', code: 'CARTAO_CREDITO' },
@@ -65,9 +66,26 @@ export class PedidosFormComponent implements OnInit {
 
   ngOnInit() {}
 
-  onSubmit() {
-    this._service.salvarPedido(this.pedido).subscribe((pedido) => {
-      console.log('Pedido salvo:', pedido);
+  calcularValorTotal(): void {
+    const quantidade = this.pedido.quantidade || 0;
+    this.pedido.valorTotal = quantidade * this.precoMarmita;
+  }
+
+  atualizarEndereco(endereco: any) {
+    // Atualiza os dados do endereço no objeto pedido
+    Object.assign(this.pedido, endereco);
+    console.log('Endereço atualizado no pedido:', this.pedido);
+  }
+
+  salvar() {
+    this._service.salvarPedido(this.pedido).subscribe({
+      next: (pedido) => {
+        console.log('Pedido salvo:', pedido);
+      },
+      error: (error) => {
+        // Exibe a mensagem de erro
+        alert(error.message); // ou substitua por outra forma de exibição
+      },
     });
   }
 }

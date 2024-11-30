@@ -46,7 +46,7 @@
 </div>
 
 <!-- Endereço -->
-<app-mapa></app-mapa>
+<app-mapa (enderecoSelecionado)="atualizarEndereco($event)"></app-mapa>
 
 <div class="grid">
   <div class="col-12">
@@ -60,6 +60,17 @@
             [(ngModel)]="pedido.quantidade"
             name="quantidade"
             type="number"
+            (blur)="calcularValorTotal()"
+          />
+        </div>
+
+        <div class="field col-12 md:col-4">
+          <label>Valor Total</label>
+          <input
+            pInputText
+            [(ngModel)]="pedido.valorTotal"
+            name="valorTotal"
+            type="number"
           />
         </div>
         <div class="field col-12 md:col-4">
@@ -67,6 +78,7 @@
           <p-dropdown
             [options]="formasPagamento"
             optionLabel="name"
+            optionValue="code"
             [(ngModel)]="pedido.pagamento"
             name="formaPagamento"
           ></p-dropdown>
@@ -90,7 +102,7 @@
           />
         </div>
       </div>
-      <p-button>Realizar pedido</p-button>
+      <p-button (onClick)="salvar()">Realizar pedido</p-button>
     </div>
   </div>
 </div>
