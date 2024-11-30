@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild, OnInit } from '@angular/core';
+import {
+  Component,
+  ViewChild,
+  OnInit,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import {
   GoogleMap,
   MapInfoWindow,
@@ -19,6 +25,8 @@ import { InputTextModule } from 'primeng/inputtext';
 export class MapaComponent implements OnInit {
   @ViewChild(GoogleMap, { static: false }) map!: GoogleMap;
   @ViewChild(MapInfoWindow, { static: false }) infoWindow!: MapInfoWindow;
+
+  @Output() enderecoSelecionado = new EventEmitter<any>();
 
   center: google.maps.LatLngLiteral = { lat: -15.7801, lng: -47.9292 }; // Coordenadas iniciais (Brasília)
   zoom = 14;
@@ -71,13 +79,39 @@ export class MapaComponent implements OnInit {
           results &&
           results.length > 0
         ) {
-          const fullAddress = results[0].formatted_address;
-          console.log('Endereço completo:', fullAddress);
-          console.log('Detalhes do endereço:', JSON.stringify(results[0], null, 4)); // Contém todos os detalhes, como componentes do endereço
+          const addressComponents = results[0].address_components;
+          const formattedAddress = results[0].formatted_address;
+
+          // Extrair os dados importantes
+          const endereco = {
+            enderecoCompleto: formattedAddress,
+            rua: this.getComponent(addressComponents, 'route'),
+            numero: this.getComponent(addressComponents, 'street_number'),
+            cep: this.getComponent(addressComponents, 'postal_code'),
+            cidade: this.getComponent(
+              addressComponents,
+              'administrative_area_level_2'
+            ),
+            estado: this.getComponent(
+              addressComponents,
+              'administrative_area_level_1'
+            ),
+            pais: this.getComponent(addressComponents, 'country'),
+            latitude: results[0].geometry.location.lat(), // Pega a latitude
+            longitude: results[0].geometry.location.lng(),
+          };
+
+          // Emitir o endereço para o componente pai
+          this.enderecoSelecionado.emit(endereco);
         } else {
           console.error('Erro ao obter o endereço:', status);
         }
       });
     }
+  }
+
+  private getComponent(components: any[], type: string): string | undefined {
+    const component = components.find((c) => c.types.includes(type));
+    return component ? component.long_name : undefined;
   }
 }
