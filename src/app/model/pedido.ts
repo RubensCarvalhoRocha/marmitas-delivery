@@ -1,3 +1,5 @@
+import { Pagamento } from './pagamento';
+
 export class Pedido {
   public nomeCliente?: string;
   public cpf?: string;
@@ -18,6 +20,8 @@ export class Pedido {
   public troco?: number;
   public valorTotal?: number;
   public quantidade?: number;
+  public latitude?: number;
+  public longitude?: number;
 
   constructor(pedido: Partial<Pedido>) {
     if (pedido) {
