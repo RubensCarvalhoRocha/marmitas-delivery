@@ -94,6 +94,7 @@ export class PedidosFormComponent implements OnInit {
         next: (pedidoAtualizado) => {
           console.log('Pedido atualizado:', pedidoAtualizado);
           alert('Pedido atualizado com sucesso!');
+          this._router.navigate(['/pedidos']); // Navega para a rota de pedidos
         },
         error: (error) => {
           // Exibe a mensagem de erro
@@ -106,6 +107,7 @@ export class PedidosFormComponent implements OnInit {
         next: (pedidoCriado) => {
           console.log('Pedido salvo:', pedidoCriado);
           alert('Pedido criado com sucesso!');
+          this._router.navigate(['/pedidos']); // Navega para a rota de pedidos
         },
         error: (error) => {
           // Exibe a mensagem de erro
