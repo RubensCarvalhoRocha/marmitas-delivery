@@ -1,4 +1,5 @@
 export class Pedido {
+  public id?: number;
   public nomeCliente?: string;
   public cpf?: string;
   public telefone?: string;

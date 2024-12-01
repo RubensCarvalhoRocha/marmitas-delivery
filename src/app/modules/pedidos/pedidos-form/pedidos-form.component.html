@@ -1,7 +1,7 @@
 <div class="card">
   <h5>Informações do Cliente:</h5>
   <div class="p-fluid p-formgrid grid">
-    <div class="field col-12 md:col-6">
+    <div class="field col-12 md:col-3">
       <label class="p-sr-only">Nome do Cliente</label>
       <input
         pInputText
@@ -11,7 +11,7 @@
         placeholder="Nome"
       />
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-12 md:col-3">
       <label class="p-sr-only">CPF</label>
       <input
         pInputText
@@ -19,9 +19,10 @@
         name="cpf"
         type="text"
         placeholder="CPF"
+        mask="000.000.000-00"
       />
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-12 md:col-3">
       <label class="p-sr-only">Telefone</label>
       <input
         pInputText
@@ -29,9 +30,10 @@
         name="telefone"
         type="text"
         placeholder="Telefone"
+        mask="(00) 0 0000-0000"
       />
     </div>
-    <div class="field col-12 md:col-6">
+    <div class="field col-12 md:col-3">
       <label htmlFor="lastname1" class="p-sr-only">Referência</label>
       <input
         pInputText
@@ -53,7 +55,7 @@
     <div class="card">
       <h5>Pedido</h5>
       <div class="p-fluid p-formgrid grid">
-        <div class="field col-12 md:col-4">
+        <div class="field col-12 md:col-2">
           <label>Quantidade</label>
           <input
             pInputText
@@ -64,16 +66,17 @@
           />
         </div>
 
-        <div class="field col-12 md:col-4">
+        <div class="field col-12 md:col-2">
           <label>Valor Total</label>
           <input
             pInputText
             [(ngModel)]="pedido.valorTotal"
             name="valorTotal"
             type="number"
+            readonly
           />
         </div>
-        <div class="field col-12 md:col-4">
+        <div class="field col-12 md:col-2">
           <label htmlFor="state">Forma de pagamento</label>
           <p-dropdown
             [options]="formasPagamento"
@@ -83,8 +86,8 @@
             name="formaPagamento"
           ></p-dropdown>
         </div>
-        <div class="field col-12 md:col-4">
-          <label>Caso precise de troco: para qual valor?</label>
+        <div class="field col-12 md:col-2">
+          <label>Troco para qual valor:</label>
           <input
             pInputText
             [(ngModel)]="pedido.troco"
@@ -92,7 +95,7 @@
             type="number"
           />
         </div>
-        <div class="field col-12 md:col-12">
+        <div class="field col-12 md:col-4">
           <label>Observação</label>
           <input
             pInputText
@@ -102,7 +105,7 @@
           />
         </div>
       </div>
-      <p-button (onClick)="salvar()">Realizar pedido</p-button>
+      <p-button (onClick)="salvar()">Salvar pedido</p-button>
     </div>
   </div>
 </div>

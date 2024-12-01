@@ -11,7 +11,6 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { PedidosService } from './pedidos.service';
 import { Pedido } from '../../model/pedido';
-
 @Component({
   selector: 'app-pedidos',
   standalone: true,
@@ -33,7 +32,7 @@ export class PedidosComponent implements OnInit {
 
   @ViewChild('filter') filter!: ElementRef;
 
-  constructor(private router: Router, private _service: PedidosService) {}
+  constructor(private _router: Router, private _service: PedidosService) {}
   ngOnInit(): void {
     this._service.pedidos$.subscribe((pedidos) => {
       this.pedidos = pedidos;
@@ -51,12 +50,13 @@ export class PedidosComponent implements OnInit {
   onGlobalFilter(table: Table, event: Event) {
     table.filterGlobal((event.target as HTMLInputElement).value, 'contains');
   }
-  verDetalhes(pedido: Pedido): void {
-    console.log('Detalhes do Pedido:', pedido);
-    // Implementação adicional, como abrir um modal
-  }
+
+  navegarParaEdicao(id: number): void {
+    console.log('Navegando para o pedido com ID:', id); // Debugging
+    this._router.navigate([`/pedidos/${id}`]);
+}
 
   navigateTo(id: string): void {
-    this.router.navigate(['/pedidos', id]);
+    this._router.navigate(['/pedidos', id]);
   }
 }

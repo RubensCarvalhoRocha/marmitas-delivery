@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MapaComponent } from '../../mapa/mapa.component';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { CalendarModule } from 'primeng/calendar';
@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Pedido } from '../../../model/pedido';
 import { PedidosService } from '../pedidos.service';
-
+import { NgxMaskDirective, provideEnvironmentNgxMask } from 'ngx-mask';
 @Component({
   selector: 'app-pedidos-form',
   standalone: true,
@@ -41,6 +41,7 @@ import { PedidosService } from '../pedidos.service';
     InputTextareaModule,
     InputTextModule,
     RouterModule,
+    NgxMaskDirective,
   ],
   templateUrl: './pedidos-form.component.html',
   styleUrl: './pedidos-form.component.css',
@@ -56,9 +57,24 @@ export class PedidosFormComponent implements OnInit {
 
   pedido: Pedido = new Pedido({});
 
-  constructor(private _service: PedidosService) {}
+  constructor(
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _service: PedidosService
+  ) {}
 
-  ngOnInit() {}
+  ngOnInit(): void {
+    this._route.params.subscribe((params) => {
+      const id = params['id'];
+      console.log('ID capturado da URL:', id); // Debugging
+      if (id && id !== 'novo') {
+        this.carregarPedido(id); // Converte o ID para número
+        console.log(this.pedido);
+      } else {
+        console.error('ID não foi capturado da URL.');
+      }
+    });
+  }
 
   calcularValorTotal(): void {
     const quantidade = this.pedido.quantidade || 0;
@@ -72,13 +88,42 @@ export class PedidosFormComponent implements OnInit {
   }
 
   salvar() {
-    this._service.salvarPedido(this.pedido).subscribe({
+    if (this.pedido.id) {
+      // Caso o pedido já tenha um ID, atualiza o pedido existente
+      this._service.atualizarPedido(this.pedido.id, this.pedido).subscribe({
+        next: (pedidoAtualizado) => {
+          console.log('Pedido atualizado:', pedidoAtualizado);
+          alert('Pedido atualizado com sucesso!');
+        },
+        error: (error) => {
+          // Exibe a mensagem de erro
+          alert(error.message); // ou substitua por outra forma de exibição
+        },
+      });
+    } else {
+      // Caso não tenha um ID, cria um novo pedido
+      this._service.salvarPedido(this.pedido).subscribe({
+        next: (pedidoCriado) => {
+          console.log('Pedido salvo:', pedidoCriado);
+          alert('Pedido criado com sucesso!');
+        },
+        error: (error) => {
+          // Exibe a mensagem de erro
+          alert(error.message); // ou substitua por outra forma de exibição
+        },
+      });
+    }
+  }
+
+  carregarPedido(id: number): void {
+    this._service.buscarPedidoPorId(id).subscribe({
       next: (pedido) => {
-        console.log('Pedido salvo:', pedido);
+        console.log('Pedido retornado:', pedido); // Debugging
+        this.pedido = pedido; // Atualiza o objeto pedido com os dados retornados
       },
       error: (error) => {
-        // Exibe a mensagem de erro
-        alert(error.message); // ou substitua por outra forma de exibição
+        console.error('Erro ao carregar o pedido:', error); // Tratamento de erro
+        alert('Erro ao carregar o pedido: ' + error.message);
       },
     });
   }

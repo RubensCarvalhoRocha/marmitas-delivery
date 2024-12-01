@@ -29,17 +29,28 @@ export class PedidosService {
   // @ Métodos Públicos
   // -----------------------------------------------------------------------------------------------------
 
-  /**
-   * Obter lista de pedidos do servidor
-   */
   salvarPedido(pedido: Pedido): Observable<Pedido> {
     return this._http.post<Pedido>(`${environment.api}/pedidos`, pedido).pipe(
       catchError((error) => {
         // Extrai a mensagem do erro
-        const errorMessage = error.error?.message || 'Ocorreu um erro desconhecido.';
+        const errorMessage =
+          error.error?.message || 'Ocorreu um erro desconhecido.';
         return throwError(() => new Error(errorMessage));
       })
     );
+  }
+
+  atualizarPedido(id: number, pedido: Pedido): Observable<Pedido> {
+    return this._http
+      .put<Pedido>(`${environment.api}/pedidos/${id}`, pedido)
+      .pipe(
+        catchError((error) => {
+          // Extrai a mensagem do erro
+          const errorMessage =
+            error.error?.message || 'Ocorreu um erro desconhecido.';
+          return throwError(() => new Error(errorMessage));
+        })
+      );
   }
 
   listarPedidos(): Observable<Pedido[]> {
@@ -53,5 +64,9 @@ export class PedidosService {
         throw error;
       })
     );
+  }
+
+  buscarPedidoPorId(id: number): Observable<any> {
+    return this._http.get<any>(`${environment.api}/pedidos/${id}`);
   }
 }
