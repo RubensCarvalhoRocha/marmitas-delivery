@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -13,6 +19,12 @@ import { PedidosService } from './pedidos.service';
 import { Pedido } from '../../model/pedido';
 import { RotasService } from '../rotas/rotas.service';
 import { DeliveryPoints } from '../../model/deliveryPoints';
+import { RotasComponent } from '../rotas/rotas.component';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
+} from '@angular/material/dialog';
 @Component({
   selector: 'app-pedidos',
   standalone: true,
@@ -25,6 +37,7 @@ import { DeliveryPoints } from '../../model/deliveryPoints';
     StyleClassModule,
     PanelMenuModule,
     InputTextModule,
+    MatDialogModule,
   ],
   templateUrl: './pedidos.component.html',
   styleUrl: './pedidos.component.css',
@@ -38,7 +51,9 @@ export class PedidosComponent implements OnInit {
   constructor(
     private _router: Router,
     private _service: PedidosService,
-    private _rotasService: RotasService
+    private _rotasService: RotasService,
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private _dialog: MatDialog
   ) {}
   ngOnInit(): void {
     this._service.pedidos$.subscribe((pedidos) => {
@@ -87,6 +102,15 @@ export class PedidosComponent implements OnInit {
       .listarPontosDeEntrega(deliveryPoints)
       .subscribe((response) => {
         console.log('Resposta do serviço:', response);
+
+        this._dialog.open(RotasComponent, {
+          data: response, // Passa os dados da resposta para o modal
+          width: '85vw', // Largura máxima da viewport
+          height: '85vh', // Altura máxima da viewport
+          maxWidth: '85vw', // Impede limite de largura padrão
+          maxHeight: '85vh', // Impede limite de altura padrão
+          panelClass: 'full-screen-dialog', // Classe para estilização adicional
+        });
       });
   }
 
