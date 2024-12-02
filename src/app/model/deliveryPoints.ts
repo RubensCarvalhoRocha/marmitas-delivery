@@ -6,6 +6,7 @@ export class DeliveryPoints {
   public address?: string; // Endereço completo
   public latitude?: number;
   public longitude?: number;
+  public rotaMsg?: string;
 
   constructor(deliveryPoints?: Partial<DeliveryPoints>) {
     if (deliveryPoints) {

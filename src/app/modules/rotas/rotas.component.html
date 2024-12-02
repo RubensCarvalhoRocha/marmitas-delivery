@@ -1,1 +1,48 @@
-<p>rotas works!</p>
+<div class="modal-container">
+  <header class="modal-header">
+    <h1>Detalhes da Rota</h1>
+    <p>
+      <strong>Distância Total:</strong>
+      {{ data.totalDistance | number : "1.2-2" }} km
+    </p>
+  </header>
+
+  <section class="delivery-list">
+    <h2>Ordem de Entrega</h2>
+    <ol>
+      <li
+        *ngFor="let point of data.points; let i = index"
+        class="delivery-item"
+      >
+        <div class="delivery-step">
+          <div class="step-number">{{ i + 1 }}</div>
+          <div class="step-details">
+            <p><strong>Cliente:</strong> {{ point.cliente }}</p>
+            <p><strong>Pedido:</strong> {{ point.pedido }}</p>
+            <p><strong>Pagamento:</strong> {{ point.pagamento }}</p>
+            <p><strong>Observações:</strong> {{ point.obs }}</p>
+            <p><strong>Endereço:</strong> {{ point.address }}</p>
+            <a
+              [href]="
+                'https://www.google.com/maps/search/?api=1&query=' +
+                point.latitude +
+                ',' +
+                point.longitude
+              "
+              target="_blank"
+              class="maps-link"
+            >
+              Abrir no Google Maps
+            </a>
+          </div>
+        </div>
+      </li>
+    </ol>
+  </section>
+
+  <footer class="modal-footer">
+    <button mat-raised-button mat-dialog-close class="close-button">
+      Fechar
+    </button>
+  </footer>
+</div>
