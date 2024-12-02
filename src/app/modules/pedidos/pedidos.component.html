@@ -4,6 +4,7 @@
   [paginator]="true"
   [rows]="5"
   responsiveLayout="scroll"
+  [(selection)]="selectedPedidos"
   [rowsPerPageOptions]="[5, 10, 20]"
 >
   <ng-template pTemplate="caption">
@@ -28,6 +29,7 @@
           (click)="clear(dt1)"
         ></button>
       </div>
+
       <p-button
         type="button"
         label="Novo Pedido"
@@ -35,11 +37,23 @@
         class="p-button-success"
         (click)="navigateTo('novo')"
       ></p-button>
+
+      <p-button
+        type="button"
+        label="Calcular Melhor Rota"
+        icon="pi pi-check"
+        [disabled]="selectedPedidos.length === 0"
+        (click)="executarAcaoNosSelecionados()"
+      ></p-button>
     </div>
   </ng-template>
 
   <ng-template pTemplate="header">
     <tr>
+      <th>
+        <!-- Checkbox para selecionar todos os itens -->
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
       <th pSortableColumn="nomeCliente">
         Cliente <p-sortIcon field="nomeCliente"></p-sortIcon>
       </th>
@@ -55,12 +69,17 @@
   </ng-template>
 
   <ng-template pTemplate="body" let-pedido>
-    <tr>
+    <tr [pSelectableRow]="pedido">
+      <td>
+        <!-- Checkbox individual para cada pedido -->
+        <p-tableCheckbox [value]="pedido"></p-tableCheckbox>
+      </td>
       <td>{{ pedido.nomeCliente }}</td>
       <td>{{ pedido.enderecoCompleto }}</td>
-      <td>{{ pedido.valorTotal | currency : 'BRL' }}</td>
-      <td>{{ pedido.datahora | date : 'dd/MM/yyyy HH:mm' }}</td>
+      <td>{{ pedido.valorTotal | currency : "BRL" }}</td>
+      <td>{{ pedido.datahora | date : "dd/MM/yyyy HH:mm" }}</td>
       <td>
+        <!-- Botão de editar -->
         <button
           pButton
           pRipple

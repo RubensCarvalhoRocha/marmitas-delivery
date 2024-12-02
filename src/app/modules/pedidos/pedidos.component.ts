@@ -29,6 +29,7 @@ import { Pedido } from '../../model/pedido';
 })
 export class PedidosComponent implements OnInit {
   pedidos: Pedido[] = [];
+  selectedPedidos: Pedido[] = [];
 
   @ViewChild('filter') filter!: ElementRef;
 
@@ -40,6 +41,10 @@ export class PedidosComponent implements OnInit {
 
     // Inicializa a lista de pedidos chamando o serviço
     this._service.listarPedidos().subscribe();
+  }
+
+  executarAcaoNosSelecionados(): void {
+    console.log('pedidos selecionados:', this.selectedPedidos);
   }
 
   clear(table: Table) {
