@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Pedido } from '../../model/pedido';
 import { BehaviorSubject, catchError, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
+import moment from 'moment';
 
 @Injectable({
   providedIn: 'root',
@@ -56,7 +57,17 @@ export class PedidosService {
   listarPedidos(): Observable<Pedido[]> {
     return this._http.get<Pedido[]>(`${environment.api}/pedidos`).pipe(
       tap((pedidos: Pedido[]) => {
-        // Atualiza o BehaviorSubject com os pedidos recebidos
+        // Subtrai 3 horas da datahora de cada pedido usando JavaScript puro
+        pedidos.forEach((pedido) => {
+          if (pedido.datahora) {
+            // Cria um novo objeto Date e subtrai 3 horas (1000 * 3600 * 3 ms)
+            pedido.datahora = new Date(
+              new Date(pedido.datahora).getTime() - 1000 * 3600 * 3
+            );
+          }
+        });
+
+        // Atualiza o BehaviorSubject com os pedidos ajustados
         this._pedidos.next(pedidos);
       }),
       catchError((error) => {

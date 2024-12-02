@@ -21,6 +21,7 @@ export class Pedido {
   public quantidade?: number;
   public latitude?: number;
   public longitude?: number;
+  public datahora?: Date;
 
   constructor(pedido: Partial<Pedido>) {
     if (pedido) {
