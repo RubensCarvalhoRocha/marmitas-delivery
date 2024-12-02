@@ -18,6 +18,7 @@ import { TagModule } from 'primeng/tag';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { DropdownModule } from 'primeng/dropdown';
+import { NgxMaskDirective } from 'ngx-mask';
 
 interface RoleOption {
   label: string;
@@ -39,6 +40,7 @@ interface RoleOption {
     CommonModule,
     ReactiveFormsModule,
     DropdownModule,
+    NgxMaskDirective
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css',
