@@ -21,7 +21,7 @@ import { DropdownModule } from 'primeng/dropdown';
 
 interface RoleOption {
   label: string;
-  value: 'ROLE_USER' | 'ROLE_GERENTE' | 'ROLE_ADMIN';
+  value: 'ROLE_ADMIN';
 }
 
 @Component({
@@ -68,8 +68,6 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit() {
     this.roles = [
-      { label: 'Usuário', value: 'ROLE_USER' },
-      { label: 'Gerente', value: 'ROLE_GERENTE' },
       { label: 'Administrador', value: 'ROLE_ADMIN' },
     ];
   }
