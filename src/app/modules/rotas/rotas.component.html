@@ -1,10 +1,10 @@
 <div class="modal-container">
-  <header class="modal-header">
+  <header class="modal-header mt-4">
     <h1>Detalhes da Rota</h1>
-    <p>
+    <!-- <p>
       <strong>Distância Total:</strong>
       {{ data.totalDistance | number : "1.2-2" }} km
-    </p>
+    </p> -->
   </header>
 
   <section class="delivery-list">
@@ -22,6 +22,7 @@
             <p><strong>Pagamento:</strong> {{ point.pagamento }}</p>
             <p><strong>Observações:</strong> {{ point.obs }}</p>
             <p><strong>Endereço:</strong> {{ point.address }}</p>
+            <p><strong>Link:</strong> {{ point.rotaMsg }}</p>
             <a
               [href]="
                 'https://www.google.com/maps/search/?api=1&query=' +
