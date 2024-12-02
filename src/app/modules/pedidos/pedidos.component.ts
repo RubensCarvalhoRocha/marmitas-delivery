@@ -11,6 +11,8 @@ import { PanelMenuModule } from 'primeng/panelmenu';
 import { InputTextModule } from 'primeng/inputtext';
 import { PedidosService } from './pedidos.service';
 import { Pedido } from '../../model/pedido';
+import { RotasService } from '../rotas/rotas.service';
+import { DeliveryPoints } from '../../model/deliveryPoints';
 @Component({
   selector: 'app-pedidos',
   standalone: true,
@@ -33,7 +35,11 @@ export class PedidosComponent implements OnInit {
 
   @ViewChild('filter') filter!: ElementRef;
 
-  constructor(private _router: Router, private _service: PedidosService) {}
+  constructor(
+    private _router: Router,
+    private _service: PedidosService,
+    private _rotasService: RotasService
+  ) {}
   ngOnInit(): void {
     this._service.pedidos$.subscribe((pedidos) => {
       this.pedidos = pedidos;
@@ -43,8 +49,45 @@ export class PedidosComponent implements OnInit {
     this._service.listarPedidos().subscribe();
   }
 
-  executarAcaoNosSelecionados(): void {
+  calcularRota(): void {
     console.log('pedidos selecionados:', this.selectedPedidos);
+
+    // Ponto fixo de origem
+    const origem = new DeliveryPoints({
+      cliente: 'Endereco Origem',
+      pedido: 'inicial',
+      pagamento: 'inicio',
+      obs: 'inicio',
+      address: 'Rua das Flores, 123',
+      latitude: -23.55052,
+      longitude: -46.633308,
+    });
+
+    // Converter pedidos para DeliveryPoints
+    const deliveryPoints: DeliveryPoints[] = [
+      origem, // Adiciona o ponto de origem como o primeiro item
+      ...this.selectedPedidos.map(
+        (pedido) =>
+          new DeliveryPoints({
+            cliente: `${pedido.nomeCliente} (${pedido.cpf})`,
+            pedido: `Total: R$${pedido.valorTotal} | Qtd: ${pedido.quantidade} | Obs: ${pedido.obs}`,
+            pagamento: `R$${pedido.valorTotal} - ${pedido.pagamento}`,
+            obs: pedido.obs,
+            address: pedido.enderecoCompleto,
+            latitude: pedido.latitude,
+            longitude: pedido.longitude,
+          })
+      ),
+    ];
+
+    console.log('pedidos convertidos:', deliveryPoints);
+
+    // Chamar o serviço com os pontos convertidos
+    this._rotasService
+      .listarPontosDeEntrega(deliveryPoints)
+      .subscribe((response) => {
+        console.log('Resposta do serviço:', response);
+      });
   }
 
   clear(table: Table) {
@@ -59,7 +102,7 @@ export class PedidosComponent implements OnInit {
   navegarParaEdicao(id: number): void {
     console.log('Navegando para o pedido com ID:', id); // Debugging
     this._router.navigate([`/pedidos/${id}`]);
-}
+  }
 
   navigateTo(id: string): void {
     this._router.navigate(['/pedidos', id]);

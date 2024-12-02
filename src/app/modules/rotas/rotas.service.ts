@@ -28,9 +28,14 @@ export class RotasService {
   // @ Métodos Públicos
   // -----------------------------------------------------------------------------------------------------
 
-  listarPontosDeEntrega(): Observable<DeliveryPoints[]> {
+  listarPontosDeEntrega(
+    pontosEntrega: DeliveryPoints[]
+  ): Observable<DeliveryPoints[]> {
     return this._http
-      .get<DeliveryPoints[]>(`${environment.api}/deliveryPoints/route`)
+      .post<DeliveryPoints[]>(
+        `${environment.api}/delivery/route`,
+        pontosEntrega
+      )
       .pipe(
         tap((pontosDeEntrega: DeliveryPoints[]) => {
           // Atualiza o BehaviorSubject com os pontosDeEntrega recebidos

@@ -43,17 +43,13 @@
         label="Calcular Melhor Rota"
         icon="pi pi-check"
         [disabled]="selectedPedidos.length === 0"
-        (click)="executarAcaoNosSelecionados()"
+        (click)="calcularRota()"
       ></p-button>
     </div>
   </ng-template>
 
   <ng-template pTemplate="header">
     <tr>
-      <th>
-        <!-- Checkbox para selecionar todos os itens -->
-        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-      </th>
       <th pSortableColumn="nomeCliente">
         Cliente <p-sortIcon field="nomeCliente"></p-sortIcon>
       </th>
@@ -65,15 +61,15 @@
       </th>
       <th>Data e Hora</th>
       <th>Ações</th>
+      <th>
+        <!-- Checkbox para selecionar todos os itens -->
+        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+      </th>
     </tr>
   </ng-template>
 
   <ng-template pTemplate="body" let-pedido>
     <tr [pSelectableRow]="pedido">
-      <td>
-        <!-- Checkbox individual para cada pedido -->
-        <p-tableCheckbox [value]="pedido"></p-tableCheckbox>
-      </td>
       <td>{{ pedido.nomeCliente }}</td>
       <td>{{ pedido.enderecoCompleto }}</td>
       <td>{{ pedido.valorTotal | currency : "BRL" }}</td>
@@ -88,6 +84,10 @@
           class="p-button-text p-button-icon-only"
           (click)="navegarParaEdicao(pedido.id)"
         ></button>
+      </td>
+      <td>
+        <!-- Checkbox individual para cada pedido -->
+        <p-tableCheckbox [value]="pedido"></p-tableCheckbox>
       </td>
     </tr>
   </ng-template>
